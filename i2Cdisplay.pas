@@ -4,26 +4,49 @@ interface
 const
 F_CPU = 8000000;      //частота процессора в герцах,корректировать
                       //по необходимости
+                      // cpu clock frequncy, change this constant, if you need
 var
   CuteentDisplay:byte; // адрес активного дисплея,можно менять если нужно
+                       // current dislay adress, change if more one display
   Lcd_row:byte;
   Lcd_col:byte;
   Light:byte;
   procedure Lcd_init(addr:byte;rw:byte;col:byte); // инициализация дисплея
-  procedure Lcd_write(data:byte);
+                                                  //display init function
+
+  procedure Lcd_write(data:byte); // прямая запись байта
+                                  // raw byte output
+
   procedure Lcd_Light(mode:boolean);  // подсветка дисплея,если используется
                                       // true - вкл,false - выкл
-  procedure Lcd_clear();  //
-  procedure Lcd_Cursor(mode:boolean);
-  procedure Lcd_CursorBlink(mode:boolean);
-  procedure Lcd_Pos(col:byte;row:byte);
-  procedure Lcd_Put(data:char);
-  procedure Lcd_Print(const data:shortstring);
-  procedure Lcd_Lscroll();
-  procedure Lcd_Rscroll();
-  procedure Lcd_FlowRtoL();
-  procedure Lcd_FlowLtoR();
+                                      // light display if exist
+                                      // true - is on, false - off
+  procedure Lcd_clear();  //   очистка дисплея
+                          // clear display procedure
+
+  procedure Lcd_Pos(col:byte;row:byte); // установка начальной позиции
+                                        // вывода
+                                        // set start position of output
+
+  procedure Lcd_Put(data:char); // вывод одного символа
+                                // put shar
+
+  procedure Lcd_Print(const data:shortstring);//вывод строки
+                                             // print string on lcd
+  procedure Lcd_Lscroll(); // сдвиг текста влево на одну позицию
+                           // sctoll text left one position
+
+  procedure Lcd_Rscroll(); //сдвиг текста вправо на одну позицию
+                          // scroll text right one position
+
+  procedure Lcd_FlowRtoL(); //вывод справа на лево
+                            //flow text to left
+
+  procedure Lcd_FlowLtoR(); //вывод слева на право
+                            //flow text to right
+
   procedure Lcd_LoadXchar(location:byte , var charmap[] array of byte);
+
 implementation
 uses i2Clib,delay;
 const
