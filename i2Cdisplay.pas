@@ -45,7 +45,7 @@ var
   procedure Lcd_FlowLtoR(); //вывод слева на право
                             //flow text to right
 
-  procedure Lcd_LoadXchar(location:byte , var charmap[] array of byte);
+  procedure Lcd_LoadXchar(location:byte;var charmap:array of byte);
 
 implementation
 uses i2Clib,delay;
@@ -275,13 +275,13 @@ end;
  display_mod := display_mod or LCD_ENTRYLEFT;
 	command(LCD_ENTRYMODESET or display_mod);
  end;
-procedure Lcd_LoadXchar(location:byte , var charmap[] array of byte);
+procedure Lcd_LoadXchar(location:byte ; var charmap: array of byte);
 var
   i:byte;
 begin
-location := location and 0x7; // we only have 8 locations 0-7
-	command(LCD_SETCGRAMADDR | (location shl 3));
-	for int i=0 to 8 do
+location := location and $7; // we only have 8 locations 0-7
+	command(LCD_SETCGRAMADDR or (location shl 3));
+	for i:=0 to 8 do
 		write(charmap[i]);
 end;
 end.
